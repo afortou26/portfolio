@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stoma-Cue | Andre Fortou</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg:#0d0d0d;--bg2:#141414;--bg3:#1c1c1c;--border:rgba(255,255,255,0.07);--bh:rgba(255,255,255,0.16);--text:#e8e8e8;--muted:#777;--dim:#444;--accent:#c8f464;--font:'Inter',sans-serif;--mono:'DM Mono',monospace; }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased; }
+    a { color:inherit;text-decoration:none; }
+    nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;border-bottom:1px solid var(--border);background:rgba(13,13,13,0.9);backdrop-filter:blur(12px); }
+    .nav-back { display:flex;align-items:center;gap:0.5rem;font-size:13px;color:var(--muted);transition:color 0.2s; }
+    .nav-back:hover { color:var(--text); }
+    .nav-back svg { width:14px;height:14px; }
+    .nav-name { font-size:13px;font-weight:500;letter-spacing:0.04em;color:var(--dim); }
+
+    .project-hero { padding:8rem 2rem 4rem;border-bottom:1px solid var(--border);max-width:1100px;margin:0 auto; }
+    .hero-meta { display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap; }
+    .meta-pill { font-family:var(--mono);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);border:1px solid var(--border);padding:3px 8px;border-radius:2px; }
+    .meta-pill.accent { color:var(--accent);border-color:rgba(200,244,100,0.3); }
+    .project-hero h1 { font-size:clamp(2.2rem,5vw,3.8rem);font-weight:300;line-height:1.08;letter-spacing:-0.02em;margin-bottom:1.25rem; }
+    .project-hero p { max-width:600px;color:var(--muted);font-size:16px;line-height:1.75; }
+
+    .stats { display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));border-bottom:1px solid var(--border);border-left:1px solid var(--border);max-width:1100px;margin:0 auto; }
+    .stat { padding:1.5rem 2rem;border-top:1px solid var(--border);border-right:1px solid var(--border); }
+    .stat-label { font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:0.4rem; }
+    .stat-value { font-size:14px;font-weight:500;color:var(--muted); }
+
+    .project-body { max-width:1100px;margin:0 auto;padding:4rem 2rem; }
+    .prose { max-width:680px; }
+    .prose h2 { font-size:1.1rem;font-weight:500;color:var(--text);margin:2.5rem 0 0.875rem; }
+    .prose h2:first-child { margin-top:0; }
+    .prose p { color:var(--muted);line-height:1.8;margin-bottom:1rem; }
+    .prose strong { color:var(--text);font-weight:500; }
+
+    .img-full { width:100%;aspect-ratio:16/9;background:var(--bg3);border:1px solid var(--border);overflow:hidden;margin:3rem 0;display:flex;align-items:center;justify-content:center; }
+    .img-full img { width:100%;height:100%;object-fit:cover;display:block; }
+    .img-full-placeholder { font-family:var(--mono);font-size:12px;color:var(--dim); }
+    .img-grid { display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:2rem 0; }
+    .img-cell { aspect-ratio:4/3;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden; }
+    .img-cell img { width:100%;height:100%;object-fit:cover;display:block; }
+    .img-cap { font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:-1.5rem;margin-bottom:2.5rem;letter-spacing:0.04em; }
+
+    .callout { border-left:2px solid var(--accent);padding:1rem 1.5rem;margin:2rem 0;background:rgba(200,244,100,0.04); }
+    .callout p { color:var(--muted);font-size:14px;line-height:1.7;margin:0; }
+
+    .spec-grid { display:grid;grid-template-columns:1fr 1fr;gap:1px;border:1px solid var(--border);margin:1.5rem 0; }
+    .spec-item { padding:0.75rem 1rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border); }
+    .spec-label { font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);margin-bottom:0.25rem; }
+    .spec-value { font-size:13px;color:var(--muted); }
+
+    .proj-nav { border-top:1px solid var(--border);display:flex;justify-content:flex-end;align-items:center;max-width:1100px;margin:0 auto;padding:2rem; }
+    .proj-nav-link { display:flex;flex-direction:column;gap:0.25rem;padding:1rem 1.25rem;border:1px solid var(--border);border-radius:2px;min-width:200px;transition:border-color 0.2s; }
+    .proj-nav-link:hover { border-color:var(--bh); }
+    .proj-nav-dir { font-family:var(--mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim); }
+    .proj-nav-title { font-size:14px;font-weight:500;color:var(--muted); }
+    footer { border-top:1px solid var(--border);padding:1.5rem 2rem;display:flex;justify-content:space-between;color:var(--dim);font-family:var(--mono);font-size:11px; }
+    @media(max-width:700px){.img-grid{grid-template-columns:1fr;}.project-hero{padding:7rem 1.25rem 3rem;}.project-body{padding:3rem 1.25rem;}.spec-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-back">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back to work
+  </a>
+  <span class="nav-name">Andre Fortou</span>
+</nav>
+
+<div class="project-hero">
+  <div class="hero-meta">
+    <span class="meta-pill">2026</span>
+    <span class="meta-pill accent">Capstone Thesis</span>
+    <span class="meta-pill">Medical Device</span>
+    <span class="meta-pill">SolidWorks</span>
+    <span class="meta-pill">Wearable</span>
+  </div>
+  <h1>Stoma-Cue</h1>
+  <p>A flex-sensor wearable that alerts ostomates when their pouch is approaching capacity — preventing leakage, reducing anxiety, and allowing users to sleep through the night without worry.</p>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-label">Timeline</div><div class="stat-value">Senior Thesis, 2025–26</div></div>
+  <div class="stat"><div class="stat-label">Role</div><div class="stat-value">Solo / Lead Designer</div></div>
+  <div class="stat"><div class="stat-label">Tools</div><div class="stat-value">SolidWorks, Vizcom, KeyShot</div></div>
+  <div class="stat"><div class="stat-label">Output</div><div class="stat-value">Concept + Prototype</div></div>
+</div>
+
+<div class="project-body">
+  <div class="img-full">
+    <!-- <img src="images/stomacue-hero.jpg" alt="Stoma-Cue final render" /> -->
+    <span class="img-full-placeholder">stomacue-hero.jpg — replace with your best render</span>
+  </div>
+
+  <div class="prose">
+    <h2>The problem</h2>
+    <p>Roughly 1 in 500 U.S. adults live with an ostomy — a surgically created stoma that diverts waste into an external pouch. Because the stoma has no sensation, ostomates cannot tell when the pouch is filling. The result: constant manual checking, disrupted sleep, and severe anxiety about leakage.</p>
+    <p>Pouch overfilling is the leading cause of leakage, which causes skin damage, infection, and significant psychological distress. The average ostomate is 68.3 years old — a population with higher rates of dementia, making automated awareness even more critical.</p>
+  </div>
+
+  <div class="callout">
+    <p>"I wake up almost every single night. I've resorted to taking daily naps to combat my fatigue… I just risk it." — Anonymous ostomate interviewee</p>
+  </div>
+
+  <div class="prose">
+    <h2>Research &amp; process</h2>
+    <p>I interviewed ostomates and disability advocates including Alannah-Jayne Simpson, an ostomy blogger from Scotland. The research confirmed three core insights: ostomates need awareness during sleep, they strongly value discretion, and elderly users face compounding challenges around dexterity and cognitive load.</p>
+    <p>My first ideation explored Hall Effect (magnetic) sensors — effective at detecting distance changes but dangerous for users with pacemakers. I pivoted to capacitive sensors, then landed on <strong>flex sensors</strong>, which detect changes in electrical resistance as they bend. Testing with a real ostomy pouch filled with rice and wet paper towels confirmed the pouch expands with a convex curve of 10–20° and extends roughly 42mm when full.</p>
+  </div>
+
+  <div class="img-grid">
+    <div class="img-cell">
+      <!-- <img src="images/stomacue-sketches.jpg" alt="Early ideation sketches" /> -->
+      <span style="font-family:var(--mono);font-size:11px;color:var(--dim);">stomacue-sketches.jpg</span>
+    </div>
+    <div class="img-cell">
+      <!-- <img src="images/stomacue-mockup.jpg" alt="Cardboard mockup testing" /> -->
+      <span style="font-family:var(--mono);font-size:11px;color:var(--dim);">stomacue-mockup.jpg</span>
+    </div>
+  </div>
+  <p class="img-cap">Ideation sketches and early cardboard mockups used to test expansion sensing concepts.</p>
+
+  <div class="prose">
+    <h2>Design solution</h2>
+    <p>Stoma-Cue is a thin, one-piece TPU device housing dual-axis flex sensors, a flexible PCB, microcontroller, lithium-ion battery, and USB-C charging port. It slides into a specialized zippered pocket built into an ostomy support belt — a product many ostomates already wear — placing it snug against the pouch to bend naturally as it fills.</p>
+    <p>When the fullness threshold is reached, the microcontroller sends a phone notification. Users receive a discreet alert — even during sleep — before leakage occurs.</p>
+  </div>
+
+  <div class="spec-grid">
+    <div class="spec-item"><div class="spec-label">Dimensions</div><div class="spec-value">5.5 × 9.77 in × 15 mm</div></div>
+    <div class="spec-item"><div class="spec-label">Casing</div><div class="spec-value">Injection-molded TPU</div></div>
+    <div class="spec-item"><div class="spec-label">Sensing</div><div class="spec-value">Dual-axis flex sensors</div></div>
+    <div class="spec-item"><div class="spec-label">Electronics</div><div class="spec-value">Flexible PCB + microcontroller</div></div>
+    <div class="spec-item"><div class="spec-label">Charging</div><div class="spec-value">USB-C</div></div>
+    <div class="spec-item"><div class="spec-label">Compatibility</div><div class="spec-value">Standard ostomy support belts</div></div>
+  </div>
+
+  <div class="img-full">
+    <!-- <img src="images/stomacue-exploded.jpg" alt="Exploded view of Stoma-Cue" /> -->
+    <span class="img-full-placeholder">stomacue-exploded.jpg — exploded view / system architecture</span>
+  </div>
+
+  <div class="img-grid">
+    <div class="img-cell">
+      <!-- <img src="images/stomacue-render1.jpg" alt="Stoma-Cue render 1" /> -->
+      <span style="font-family:var(--mono);font-size:11px;color:var(--dim);">stomacue-render1.jpg</span>
+    </div>
+    <div class="img-cell">
+      <!-- <img src="images/stomacue-belt.jpg" alt="Stoma-Cue in support belt" /> -->
+      <span style="font-family:var(--mono);font-size:11px;color:var(--dim);">stomacue-belt.jpg</span>
+    </div>
+  </div>
+
+  <div class="prose">
+    <h2>Limitations &amp; reflection</h2>
+    <p>One known limitation is "pancaking" — when users sleep on their stomachs, waste can flatten inside the pouch, reducing the convex curve the device relies on. This may require users to adjust sleeping position, though future iterations could explore pressure-based sensing to complement the flex approach.</p>
+    <p>Stoma-Cue is the first industrial design approach to this problem. Existing biomedical proposals addressed detection in isolation but did not consider ergonomics, discretion, or the lived experience of ostomates across age groups. This project represents an opportunity to redefine how medical wearables support users in real-world environments.</p>
+  </div>
+</div>
+
+<div class="proj-nav">
+  <a href="mudi-ring.html" class="proj-nav-link">
+    <span class="proj-nav-dir">Next project →</span>
+    <span class="proj-nav-title">MUDI Ring</span>
+  </a>
+</div>
+
+<footer>
+  <span>© 2026 Andre Fortou</span>
+  <span>Stoma-Cue — Industrial &amp; Interaction Design Thesis</span>
+</footer>
+</body>
+</html>
